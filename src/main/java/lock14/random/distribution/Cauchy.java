@@ -1,5 +1,10 @@
 package lock14.random.distribution;
 
+import java.util.List;
+
+import lock14.random.stats.DescriptiveStatistics;
+import lock14.random.stats.Histogram;
+
 public class Cauchy extends AbstractDistribution<Double> {
     private double x0;
     private double gamma;
@@ -45,5 +50,17 @@ public class Cauchy extends AbstractDistribution<Double> {
     @Override
     public Double sample() {
         return inverseCdf(rng.nextDouble());
+    }
+    
+    public static void main(String[] args) {
+        Distribution<Double> distribution = new Cauchy(0, 1);
+        List<Double> samples = distribution.sample(1000000);
+        DescriptiveStatistics stats = new DescriptiveStatistics(samples);
+        for (int i = 0; i < 30; i++) {
+            System.out.print("_");
+        }
+        System.out.println();
+        Histogram histogram = new Histogram(stats, 20);
+        histogram.print();
     }
 }

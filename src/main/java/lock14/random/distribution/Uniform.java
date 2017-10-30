@@ -1,5 +1,10 @@
 package lock14.random.distribution;
 
+import java.util.List;
+
+import lock14.random.stats.DescriptiveStatistics;
+import lock14.random.stats.Histogram;
+
 public class Uniform extends AbstractDistribution<Double> {
     private static String errFormat = "Invalid interval, (a=%.2f, b=%.2f). Must have a < b";
     private double a;
@@ -51,7 +56,18 @@ public class Uniform extends AbstractDistribution<Double> {
     }
     
     public static void main(String[] args) {
-        Distribution<Double> distribution = new Uniform(-1, -5);
-        System.out.println(distribution.sample(10));
+        Distribution<Double> distribution = new Uniform();
+        List<Double> samples = distribution.sample(1000000);
+        DescriptiveStatistics stats = new DescriptiveStatistics(samples);
+        System.out.println("True mean: " + distribution.mean());
+        System.out.println("True variance: " + distribution.variance());
+        System.out.println("Sample mean: " + stats.mean());
+        System.out.println("Sample variance: " + stats.variance());
+        for (int i = 0; i < 30; i++) {
+            System.out.print("_");
+        }
+        System.out.println();
+        Histogram histogram = new Histogram(stats, 20);
+        histogram.print();
     }
 }

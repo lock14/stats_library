@@ -1,6 +1,10 @@
 package lock14.random.distribution;
 
+import java.util.List;
+
 import lock14.random.numerical.Integration;
+import lock14.random.stats.DescriptiveStatistics;
+import lock14.random.stats.Histogram;
 
 public class Gaussian extends AbstractDistribution<Double> {
     private static double HALF_LN_TWO_PI = 0.5 * Math.log(2 * Math.PI);
@@ -56,10 +60,17 @@ public class Gaussian extends AbstractDistribution<Double> {
     
     public static void main(String[] args) {
         Distribution<Double> distribution = new Gaussian();
-        System.out.println(distribution.pdf(0.2));
-        System.out.println(distribution.cdf(0.2));
-        Distribution<Double> distribution2 = new Gaussian(5, 10);
-        System.out.println(distribution2.pdf(7.0));
-        System.out.println(distribution2.cdf(7.0));
+        List<Double> samples = distribution.sample(1000000);
+        DescriptiveStatistics stats = new DescriptiveStatistics(samples);
+        System.out.println("True mean: " + distribution.mean());
+        System.out.println("True variance: " + distribution.variance());
+        System.out.println("Sample mean: " + stats.mean());
+        System.out.println("Sample variance: " + stats.variance());
+        for (int i = 0; i < 30; i++) {
+            System.out.print("_");
+        }
+        System.out.println();
+        Histogram histogram = new Histogram(stats, 20);
+        histogram.print();
     }
 }
