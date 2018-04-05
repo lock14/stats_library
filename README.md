@@ -10,7 +10,7 @@ and it feels silly to include it as a dependecy. Plus I don't want
 their designs to influence me. So I am currently looking either
 for a java math package that just includes these fucntions or I
 may try to find numerical algorithms to implement them myself,
-Though that is unliekly as it would be a lot of work.
+Though that would be a large undertaking.
 
 NOTE: I have only verified that these classes are working correctly
       in so far that I have coded the algorithms correctly. If you
