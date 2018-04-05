@@ -15,4 +15,4 @@ Though that would be a large undertaking.
 NOTE: I have only verified that these classes are working correctly
       in so far that I have coded the algorithms correctly. If you
       are looking for a statistical package that offers a high
-      guaratee of numerical accuracy, then please look elsewhere.
+      guarantee of numerical accuracy, then please look elsewhere.
