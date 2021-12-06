@@ -1,17 +1,23 @@
 package lock14.random.distribution;
 
-import java.util.List;
-
 import lock14.random.stats.DescriptiveStatistics;
 import lock14.random.stats.Histogram;
 
+import java.util.List;
+import java.util.Random;
+
 public class Cauchy extends AbstractDistribution<Double> {
-    private double x0;
-    private double gamma;
-    private double gammaSquared;
-    private double pdfConst;
-    
+    private final double x0;
+    private final double gamma;
+    private final double gammaSquared;
+    private final double pdfConst;
+
     Cauchy(double x0, double gamma) {
+        this(x0, gamma, new Random());
+    }
+
+    Cauchy(double x0, double gamma, Random random) {
+        super(random);
         this.x0 = x0;
         this.gamma = gamma;
         this.gammaSquared = gamma * gamma;
@@ -45,11 +51,6 @@ public class Cauchy extends AbstractDistribution<Double> {
             throw new IllegalArgumentException("Invalid probability: p = " + p);
         }
         return (Math.tan(Math.PI * (p + 0.5)) * gamma) + x0;
-    }
-
-    @Override
-    public Double sample() {
-        return inverseCdf(rng.nextDouble());
     }
     
     public static void main(String[] args) {

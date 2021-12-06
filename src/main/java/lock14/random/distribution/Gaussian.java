@@ -1,21 +1,27 @@
 package lock14.random.distribution;
 
-import java.util.List;
-
 import lock14.random.numerical.Integration;
 import lock14.random.stats.DescriptiveStatistics;
 import lock14.random.stats.Histogram;
 
+import java.util.List;
+import java.util.Random;
+
 public class Gaussian extends AbstractDistribution<Double> {
-    private static double HALF_LN_TWO_PI = 0.5 * Math.log(2 * Math.PI);
-    private double mu;
-    private double sigma;
+    private static final double HALF_LN_TWO_PI = 0.5 * Math.log(2 * Math.PI);
+    private final double mu;
+    private final double sigma;
     
     public Gaussian() {
         this(0.0, 1.0);
     }
-    
+
     public Gaussian(double mu, double sigma) {
+        this(mu, sigma, new Random());
+    }
+    
+    public Gaussian(double mu, double sigma, Random random) {
+        super(random);
         this.mu = mu;
         this.sigma = sigma;
     }
@@ -50,12 +56,12 @@ public class Gaussian extends AbstractDistribution<Double> {
         if (p == null || p < 0.0 || p > 1.0) {
             throw new IllegalArgumentException("Invalid probability: p = " + p);
         }
-        return null;
+        throw new UnsupportedOperationException();
     }
             
     @Override
     public Double sample() {
-        return sigma * rng.nextGaussian() + mu;
+        return sigma * randomGenerator.nextGaussian() + mu;
     }
     
     public static void main(String[] args) {

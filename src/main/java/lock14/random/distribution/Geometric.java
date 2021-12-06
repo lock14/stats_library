@@ -1,15 +1,20 @@
 package lock14.random.distribution;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import lock14.random.stats.DescriptiveStatistics;
 import lock14.random.stats.Histogram;
 
+import java.util.List;
+import java.util.Random;
+
 public class Geometric extends AbstractDistribution<Integer> {
-    private double p;
-    
+    private final double p;
+
     public Geometric(double p) {
+        this(p, new Random());
+    }
+
+    public Geometric(double p, Random random) {
+        super(random);
         this.p = p;
     }
     
@@ -44,20 +49,12 @@ public class Geometric extends AbstractDistribution<Integer> {
         if (p == null || p < 0.0 || p > 1.0) {
             throw new IllegalArgumentException("Invalid probability: p = " + p);
         }
-        return (int)Math.ceil(Math.log(1 - p) / Math.log(1 - this.p));
-    }
-
-    @Override
-    public Integer sample() {
-        return inverseCdf(rng.nextDouble());
+        return (int) Math.ceil(Math.log(1 - p) / Math.log(1 - this.p));
     }
     
     public static void main(String[] args) {
         Distribution<Integer> distribution = new Geometric(0.005);
-        List<Double> samples = distribution.sample(1000000)
-                                           .stream()
-                                           .map(Double::valueOf)
-                                           .collect(Collectors.toList());
+        List<Integer> samples = distribution.sample(1000000);
         DescriptiveStatistics stats = new DescriptiveStatistics(samples);
         System.out.println("True mean: " + distribution.mean());
         System.out.println("True variance: " + distribution.variance());

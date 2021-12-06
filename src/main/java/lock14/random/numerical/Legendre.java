@@ -5,12 +5,12 @@ package lock14.random.numerical;
  * https://userpages.umbc.edu/~squire/download/Legendre.java
  */
 public class Legendre {
-    double R[][]; // roots of Pn(x) the x[i]
-    double W[][]; // weights of Pn(x) the w[i]
+    double[][] R; // roots of Pn(x) the x[i]
+    double[][] W; // weights of Pn(x) the w[i]
 
     public Legendre(int n) {
-        double P[][] = generatePolys(n);
-        double DP[][] = generateDerivs(P, n);
+        double[][] P = generatePolys(n);
+        double[][] DP = generateDerivs(P, n);
         R = findRoots(P, n);
         W = findCoeff(P, DP, R, n);
     }
@@ -37,7 +37,7 @@ public class Legendre {
                 }
                 if (j > 0) {
                     p[i][j] = p[i][j]
-                            + ((2 * i - 1) / (double) i) * p[i - 1][j - 1];
+                              + ((2 * i - 1) / (double) i) * p[i - 1][j - 1];
                 }
             }
         }
@@ -73,8 +73,8 @@ public class Legendre {
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < i; j++) {
                 coeff[i][j] = -2.0
-                        / ((i + 1) * Evaluate(i, derivs[i], roots[i][j])
-                                * Evaluate(i + 1, polys[i + 1], roots[i][j]));
+                              / ((i + 1) * Evaluate(i, derivs[i], roots[i][j])
+                                 * Evaluate(i + 1, polys[i + 1], roots[i][j]));
             }
         }
         return coeff;
@@ -83,9 +83,9 @@ public class Legendre {
     // specialized for roots of Legendre polynomials
     // check first for zero root, reduce into T.
     // T=initial polynomial, store root at R[n][i]
-    static void legendreRoot(int n, double P[][], double R[][]) {
-        double T[] = new double[n + 1];
-        double DT[] = new double[n];
+    static void legendreRoot(int n, double[][] P, double[][] R) {
+        double[] T = new double[n + 1];
+        double[] DT = new double[n];
         int i = 0;
 
         if (P[n][0] == 0.0) {
@@ -108,8 +108,9 @@ public class Legendre {
 
             for (int k = 0; k < 20; k++) {
                 r = r - Evaluate(n - i, T, r) / Evaluate(n - i - 1, DT, r);
-                if (Math.abs(r - rold) < 1.0E-14)
+                if (Math.abs(r - rold) < 1.0E-14) {
                     break;
+                }
                 rold = r;
             }
             for (int j = n - i; j > 0; j--) {
@@ -132,7 +133,7 @@ public class Legendre {
         }
     }
 
-    private static double Evaluate(int n, double P[], double x) {
+    private static double Evaluate(int n, double[] P, double x) {
         double value = P[n];
         for (int i = n - 1; i >= 0; i--) {
             value = value * x + P[i];

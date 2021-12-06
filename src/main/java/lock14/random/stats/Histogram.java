@@ -2,22 +2,20 @@ package lock14.random.stats;
 
 import java.util.List;
 
-public class Histogram {
-    public static int DEFAULT_CANVAS_WIDTH = 1500;
-    public static int DEFAULT_CANVAS_HEIGHT = 750;
+public class Histogram<N extends Number> {
     public static double PRINT_SCALE = 0.04;
-    
-    private final double[]        freq; // freq[bin] = # occurrences in that bin
-    private double                max;  // max frequency of any bin
-    
-    public Histogram(List<Double> samples) {
+
+    private final double[] freq; // freq[bin] = # occurrences in that bin
+    private double max;  // max frequency of any bin
+
+    public Histogram(List<N> samples) {
         this(samples, null);
     }
-    
-    public Histogram(List<Double> samples, Integer bins) {
+
+    public Histogram(List<N> samples, Integer bins) {
         this(new DescriptiveStatistics(samples), bins);
     }
-    
+
     public Histogram(DescriptiveStatistics stats) {
         this(stats, null);
     }
@@ -55,7 +53,7 @@ public class Histogram {
             max = freq[bin];
         }
     }
-    
+
     public void print() {
         int scale = (int) (max * PRINT_SCALE);
         for (int bin = 0; bin < freq.length; bin++) {

@@ -1,16 +1,16 @@
 package lock14.random.sampling;
 
-import java.util.function.Function;
-
 import lock14.random.distribution.Distribution;
 import lock14.random.distribution.Uniform;
 
+import java.util.function.Function;
+
 public class RejectionSampler<N extends Number> implements DistributionSampler<N> {
-    private Uniform                uniform;
-    private Function<N, Double>    p;
-    private Function<N, Double>    q;
-    private DistributionSampler<N> qSampler;
-    private double                 M;
+    private final Uniform uniform;
+    private final Function<N, Double> p;
+    private final Function<N, Double> q;
+    private final DistributionSampler<N> qSampler;
+    private final double M;
 
     public RejectionSampler(Distribution<N> desired, Distribution<N> proposal,
                             double proposalMultiplier) {

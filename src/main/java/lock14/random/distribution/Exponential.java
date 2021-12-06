@@ -1,14 +1,20 @@
 package lock14.random.distribution;
 
-import java.util.List;
-
 import lock14.random.stats.DescriptiveStatistics;
 import lock14.random.stats.Histogram;
 
+import java.util.List;
+import java.util.Random;
+
 public class Exponential extends AbstractDistribution<Double> {
-    private double lambda;
-    
+    private final double lambda;
+
     public Exponential(double lambda) {
+        this(lambda, new Random());
+    }
+
+    public Exponential(double lambda, Random random) {
+        super(random);
         this.lambda = lambda;
     }
     
@@ -38,11 +44,6 @@ public class Exponential extends AbstractDistribution<Double> {
             throw new IllegalArgumentException("Invalid probability: p = " + p);
         }
         return (-Math.log(1 - p) / lambda);
-    }
-    
-    @Override
-    public Double sample() {
-        return inverseCdf(rng.nextDouble());
     }
     
     public static void main(String[] args) {

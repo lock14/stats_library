@@ -1,20 +1,26 @@
 package lock14.random.distribution;
 
-import java.util.List;
-
 import lock14.random.stats.DescriptiveStatistics;
 import lock14.random.stats.Histogram;
 
+import java.util.List;
+import java.util.Random;
+
 public class Uniform extends AbstractDistribution<Double> {
-    private static String errFormat = "Invalid interval, (a=%.2f, b=%.2f). Must have a < b";
-    private double a;
-    private double b;
+    private static final String errFormat = "Invalid interval, (a=%.2f, b=%.2f). Must have a < b";
+    private final double a;
+    private final double b;
     
     public Uniform() {
         this(0.0, 1.0);
     }
-    
+
     public Uniform(double a, double b) {
+        this(a, b, new Random());
+    }
+
+    public Uniform(double a, double b, Random random) {
+        super(random);
         if (b <= a) {
             throw new IllegalArgumentException(String.format(errFormat, a, b));
         }
@@ -47,12 +53,7 @@ public class Uniform extends AbstractDistribution<Double> {
         if (p == null || p < 0.0 || p > 1.0) {
             throw new IllegalArgumentException("Invalid probability: p = " + p);
         }
-        return p * (b - a) + a;
-    }
-    
-    @Override
-    public Double sample() {
-        return (b - a) * rng.nextDouble() + a;
+        return (b - a) * p  + a;
     }
     
     public static void main(String[] args) {

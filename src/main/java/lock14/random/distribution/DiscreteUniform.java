@@ -1,17 +1,22 @@
 package lock14.random.distribution;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import lock14.random.stats.DescriptiveStatistics;
 import lock14.random.stats.Histogram;
 
+import java.util.List;
+import java.util.Random;
+
 public class DiscreteUniform extends AbstractDistribution<Integer> {
-    private static String errFormat = "Invalid interval, (a=%.2f, b=%.2f). Must have a < b";
-    private int b;
-    private int a;
-    
+    private static final String errFormat = "Invalid interval, (a=%.2f, b=%.2f). Must have a < b";
+    private final int b;
+    private final int a;
+
     public DiscreteUniform(int a, int b) {
+        this(a, b, new Random());
+    }
+
+    public DiscreteUniform(int a, int b, Random random) {
+        super(random);
         if (b <= a) {
             throw new IllegalArgumentException(String.format(errFormat, a, b));
         }
@@ -45,20 +50,17 @@ public class DiscreteUniform extends AbstractDistribution<Integer> {
         if (p == null || p < 0.0 || p > 1.0) {
             throw new IllegalArgumentException("Invalid probability: p = " + p);
         }
-        return (int)Math.ceil((p * (b - a + 1.0)) + (a - 1));
+        return (int) Math.ceil((p * (b - a + 1.0)) + (a - 1));
     }
 
     @Override
     public Integer sample() {
-        return rng.nextInt(b - a + 1) + a;
+        return randomGenerator.nextInt(b - a + 1) + a;
     }
     
     public static void main(String[] args) {
         Distribution<Integer> distribution = new DiscreteUniform(1, 20);
-        List<Double> samples = distribution.sample(1000000)
-                                           .stream()
-                                           .map(Double::valueOf)
-                                           .collect(Collectors.toList());
+        List<Integer> samples = distribution.sample(1000000);
         DescriptiveStatistics stats = new DescriptiveStatistics(samples);
         System.out.println("True mean: " + distribution.mean());
         System.out.println("True variance: " + distribution.variance());
