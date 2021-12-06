@@ -1,4 +1,4 @@
-package util;
+package lock14.random.util;
 
 import lock14.random.stats.DescriptiveStatistics;
 
