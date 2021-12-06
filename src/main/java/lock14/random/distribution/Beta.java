@@ -1,7 +1,6 @@
 package lock14.random.distribution;
 
 import lock14.random.numerical.Functions;
-import org.apache.commons.math3.distribution.BetaDistribution;
 
 import java.util.Random;
 
@@ -54,15 +53,6 @@ public class Beta extends AbstractDistribution<Double> implements Distribution<D
         double b = 2;
         double x = 0.5;
         Distribution<Double> beta = new Beta(a, b);
-        BetaDistribution beta2 = new BetaDistribution(a, b);
-        
-        System.out.printf("Mean: %f %f\n", beta.mean(), beta2.getNumericalMean());
-        System.out.printf("Variance: %f %f\n", beta.variance(), beta2.getNumericalVariance());
-        System.out.printf("pdf(%.2f): %f %f\n", x, beta.pdf(x), beta2.density(x));
-        System.out.printf("cdf(%.2f): %f %f\n", x, beta.cdf(x), beta2.cumulativeProbability(x));
-        System.out.printf("cdf(%.2f): %f %f\n", x,
-                beta.inverseCdf(beta.cdf(x)),
-                beta2.inverseCumulativeProbability(beta2.cumulativeProbability(x)));
     }
 
 }

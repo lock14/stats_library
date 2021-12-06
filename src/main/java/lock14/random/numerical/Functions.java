@@ -1,7 +1,5 @@
 package lock14.random.numerical;
 
-import org.apache.commons.math3.special.Beta;
-
 /**
  * This functions in this class are adapted from the numerical methods described
  * in Object-Oriented Implementation of Numerical Methods by Dider H. Besset.
@@ -23,7 +21,7 @@ public class Functions {
     }
 
     public static double incompleteBeta(double x, double a, double b) {
-        return Beta.regularizedBeta(x, a, b);
+        return 0.0;
     }
 
     public static double incompleteBeta2(double x, double a, double b) {

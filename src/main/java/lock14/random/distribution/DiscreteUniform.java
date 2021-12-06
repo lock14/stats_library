@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Random;
 
 public class DiscreteUniform extends AbstractDistribution<Integer> {
-    private static final String errFormat = "Invalid interval, (a=%.2f, b=%.2f). Must have a < b";
+    private static final String errFormat = "Invalid interval, (a=%d, b=%d). Must have a < b";
     private final int b;
     private final int a;
 

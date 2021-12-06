@@ -1,7 +1,6 @@
 package lock14.random.distribution;
 
 import lock14.random.numerical.Functions;
-import org.apache.commons.math3.distribution.TDistribution;
 
 import java.util.Random;
 import java.util.function.Function;
@@ -64,14 +63,5 @@ public class StudentT extends AbstractDistribution<Double>{
     
     public static void main(String[] args) {
         Distribution<Double> t = new StudentT(3);
-        TDistribution t2 = new TDistribution(3);
-        System.out.println(t.pdf(5.0));
-        System.out.println(t2.density(5.0));
-        System.out.println(t.cdf(5.0));
-        System.out.println(t2.cumulativeProbability(5.0));
-        System.out.println(t.inverseCdf(0.5));
-        System.out.println(t2.inverseCumulativeProbability(0.5));
-        System.out.println();
-        System.out.println(Functions.incompleteBeta(0.2644499833, 2, 5));
     }
 }
