@@ -64,7 +64,7 @@ public class Geometric extends AbstractDistribution<Integer> {
             System.out.print("_");
         }
         System.out.println();
-        Histogram histogram = new Histogram(stats, 20);
+        Histogram<Integer> histogram = new Histogram<>(stats, 20);
         histogram.print();
     }
 }

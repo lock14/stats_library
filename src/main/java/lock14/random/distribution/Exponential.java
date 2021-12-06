@@ -58,7 +58,7 @@ public class Exponential extends AbstractDistribution<Double> {
             System.out.print("_");
         }
         System.out.println();
-        Histogram histogram = new Histogram(stats, 20);
+        Histogram<Double> histogram = new Histogram<>(stats, 20);
         histogram.print();
     }
 }
